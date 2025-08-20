@@ -12,7 +12,7 @@ import {
 } from 'react-native-safe-area-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import TaskManager from './src/TaskManager/taskManager';
+import TaskManager from './src/taskManager/taskManager';
 import { TaskProvider } from './src/context/taskContext'
 import Agenda from './src/agenda/agenda'
 import LoginScreen from './src/logIn/logIn';
@@ -31,8 +31,7 @@ function RootTab({ setIsLoggedIn }: any) {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          let iconSize = 18; // default size for all icons
-
+          let iconSize = 18;
           if (route.name === 'Task Manager') {
             iconName = 'tasks';
             iconSize = 18;

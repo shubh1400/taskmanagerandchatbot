@@ -2,26 +2,22 @@ import React, { useState, useMemo } from "react";
 import {
     View,
     Text,
-    TextInput,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Platform,
     Keyboard,
     TouchableOpacity,
-    Modal,
-    ScrollView,
     Switch,
     FlatList,
-
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './taskmanager.css'
+import styles from '../styles/taskmanager.css'
 import DropDownPicker from "react-native-dropdown-picker";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useTaskDispatch, useTaskState } from "../context/taskContext";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useTheme } from "../context/themeContext";
+import CreateTaskModal from "./model/createTaskModal";
 
 const TaskManager = () => {
     const { isDark } = useTheme();
@@ -94,14 +90,11 @@ const TaskManager = () => {
 
 
     const handleDelete = async (index) => {
-
         const Delete = tasks.filter((_, i) => i !== index);
         setTasks(Delete);
     };
 
-
     const handleOpenModal = () => setShowModel(true);
-
     const handleCloseModal = () => {
         setShowModel(false);
         setPayload({ title: '', category: '', completed: false, date: null });
@@ -283,114 +276,23 @@ const TaskManager = () => {
                                 showsVerticalScrollIndicator={false}
                             />
                         )}
-                        <Modal
-                            transparent={true}
+                        <CreateTaskModal
                             visible={showModel}
-                            animationType="slide"
-                            onRequestClose={handleCloseModal}>
-                            <View style={[styles.modalOverlay, { backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.2)' }
-                            ]}>
-                                <KeyboardAvoidingView
-                                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                                    style={{ flex: 1, justifyContent: 'center', marginBottom: 20 }}
-                                >
-                                    <ScrollView
-                                        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-                                        keyboardShouldPersistTaps="handled"
-                                        showsVerticalScrollIndicator={false}
-                                    >
-                                        <View style={{ alignContent: "center", justifyContent: "center", flexDirection: "column", }}>
-                                            <View style={[styles.modalContent, { backgroundColor: isDark ? '#333' : '#fff' }
-                                            ]}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                                                    <Text style={[styles.modalTitle, { color: isDark ? '#fff' : '#000' }]}>{editIndex !== null ? 'Edit Task' : 'Add Task'}</Text>
-                                                    <TouchableOpacity onPress={handleCloseModal} style={{ padding: 4 }}>
-                                                        <Icon name="close" size={20} color={isDark ? '#fff' : '#000'} />
-                                                    </TouchableOpacity>
-                                                </View>
-                                                <View>
-                                                    <Text style={[styles.textheader, { color: isDark ? '#fff' : '#000' }]}>Title</Text>
-                                                    <TextInput
-                                                        value={payload.title}
-                                                        onChangeText={(text) => setPayload({ ...payload, title: text })}
-                                                        placeholder="Task title"
-                                                        placeholderTextColor={isDark ? '#777' : '#ABA9A9'}
-                                                        style={[styles.textInput, { color: isDark ? '#333' : '#000', borderColor: isDark ? '#555' : '#ccc' }
-                                                        ]}
-                                                        autoFocus
-                                                    />
-                                                    {errors.title && (
-                                                        <View style={{ marginBottom: 12, marginLeft: 10 }}>
-                                                            <Text style={{ color: 'red' }}>{errors.title}</Text>
-                                                        </View>
-                                                    )}
-                                                </View>
-                                                <View style={{ zIndex: 1000 }}>
-                                                    <Text style={[styles.textheader, { color: isDark ? '#fff' : '#000' }]}>Category</Text>
-                                                    <DropDownPicker
-                                                        open={open}
-                                                        value={payload.category}
-                                                        items={items}
-                                                        setOpen={setOpen}
-                                                        setValue={(valueOrFn) => {
-                                                            setPayload({ ...payload, category: valueOrFn() })
-                                                        }}
-                                                        setItems={setItems}
-                                                        placeholder="Select task"
-                                                        listMode="SCROLLVIEW"
-                                                        scrollViewProps={{
-                                                            nestedScrollEnabled: true,
-                                                        }}
-                                                        textStyle={{ color: isDark ? '#333' : '#000' }}
-                                                        dropDownContainerStyle={{ backgroundColor: isDark ? '#fff' : '#fff' }}
-                                                    />
-                                                    {errors.category && (
-                                                        <View style={{ marginLeft: 10, marginTop: 5 }}>
-                                                            <Text style={{ color: 'red' }}>{errors.category}</Text>
-                                                        </View>
-                                                    )}
-                                                </View>
-                                                <View style={{ marginTop: 15 }}>
-                                                    <Text style={[styles.textheader, { color: isDark ? '#fff' : '#000' }]}>Date</Text>
-                                                    <View >
-                                                        <TouchableOpacity onPress={showDatePicker} style={
-                                                            styles.dateselection}>
-                                                            <Text style={{ color: isDark ? '#fff' : '#333' }}>
-                                                                {payload.date
-                                                                    ? parseLocalDateString(payload.date).toDateString()
-                                                                    : "Select Date"}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                        {errors.date && (
-                                                            <View style={{ marginBottom: 2, marginLeft: 10 }}>
-                                                                <Text style={{ color: 'red' }}>{errors.date}</Text>
-                                                            </View>
-                                                        )}
-                                                    </View>
-                                                    <DateTimePickerModal
-                                                        isVisible={isDatePickerVisible}
-                                                        mode="date"
-                                                        onConfirm={handleConfirm}
-                                                        onCancel={hideDatePicker}
-                                                    />
-                                                </View>
-                                                <View style={styles.modalActions}>
-                                                    <TouchableOpacity onPress={handleCloseModal} style={styles.secondaryButton}>
-                                                        <Text style={[styles.buttonTextSecondary, { color: isDark ? '#fff' : '#000' }]}>Cancel</Text>
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity
-                                                        onPress={handleAddOrSave}
-                                                        style={styles.primaryButton}
-                                                    >
-                                                        <Text style={styles.buttonTextPrimary}>{editIndex !== null ? 'Save' : 'Add'}</Text>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </ScrollView>
-                                </KeyboardAvoidingView>
-                            </View>
-                        </Modal>
+                            onClose={handleCloseModal}
+                            payload={payload}
+                            setPayload={setPayload}
+                            editIndex={editIndex}
+                            errors={errors}
+                            items={items}
+                            setItems={setItems}
+                            open={open}
+                            setOpen={setOpen}
+                            isDatePickerVisible={isDatePickerVisible}
+                            showDatePicker={showDatePicker}
+                            hideDatePicker={hideDatePicker}
+                            handleAddOrSave={handleAddOrSave}
+                            handleConfirm={handleConfirm}
+                        />
                         <TouchableOpacity style={[styles.fab]} onPress={handleOpenModal} activeOpacity={0.85}>
                             <Icon name="plus" size={18} color="#fff" />
                         </TouchableOpacity>
