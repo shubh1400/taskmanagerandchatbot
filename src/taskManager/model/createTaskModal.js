@@ -73,8 +73,13 @@ const CreateTaskModal = ({
                                         onChangeText={(text) => setPayload({ ...payload, title: text })}
                                         placeholder="Task title"
                                         placeholderTextColor={isDark ? '#777' : '#ABA9A9'}
-                                        style={[styles.textInput, { color: isDark ? '#333' : '#000', borderColor: isDark ? '#555' : '#ccc' }
-                                        ]}
+                                        style={[
+                                            styles.textInput,
+                                            {
+                                                color: isDark ? "#fff" : "#000",
+                                                borderColor: isDark ? "#555" : "#ccc",
+                                                backgroundColor: isDark ? "#222" : "#fff",
+                                            },]}
                                         autoFocus
                                     />
                                     {errors.title && (
@@ -99,8 +104,15 @@ const CreateTaskModal = ({
                                         scrollViewProps={{
                                             nestedScrollEnabled: true,
                                         }}
-                                        textStyle={{ color: isDark ? '#333' : '#000' }}
-                                        dropDownContainerStyle={{ backgroundColor: isDark ? '#fff' : '#fff' }}
+                                        style={{
+                                            backgroundColor: isDark ? '#222' : '#fff',
+                                            borderColor: isDark ? '#555' : '#ccc',
+                                        }}
+                                        textStyle={{ color: isDark ? '#fff' : '#000' }}
+                                        dropDownContainerStyle={{
+                                            backgroundColor: isDark ? '#333' : '#fff',
+                                            borderColor: isDark ? '#555' : '#ccc',
+                                        }}
                                     />
                                     {errors.category && (
                                         <View style={{ marginLeft: 10, marginTop: 5 }}>
