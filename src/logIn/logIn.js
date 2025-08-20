@@ -136,7 +136,6 @@ const LoginScreen = ({ onLoginSuccess }) => {
               style={styles.forgotPasswordContainer}
               onPress={handleForgotPassword}
             >
-              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
             </TouchableOpacity>
             
             {isLoading ? (
@@ -150,27 +149,6 @@ const LoginScreen = ({ onLoginSuccess }) => {
                 <Text style={styles.loginButtonText}>Log In</Text>
               </TouchableOpacity>
             )}
-
-            <View style={styles.dividerContainer}>
-              <View style={styles.divider} />
-              <Text style={styles.dividerText}>OR</Text>
-              <View style={styles.divider} />
-            </View>
-
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialButtonText}>Continue with Google</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialButtonText}>Continue with Apple</Text>
-            </TouchableOpacity>
-
-            <View style={styles.signUpContainer}>
-              <Text style={styles.signUpText}>Don't have an account? </Text>
-              <TouchableOpacity onPress={handleSignUp}>
-                <Text style={styles.signUpLink}>Sign Up</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
