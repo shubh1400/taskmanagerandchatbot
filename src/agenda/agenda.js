@@ -4,7 +4,7 @@ import { Calendar } from 'react-native-calendars';
 import { useTaskState } from '../context/taskContext';
 import { useTheme } from '../context/themeContext';
 
-const Agenda = () => {
+const Agenda  = () => {
   const tasks = useTaskState();
   const { isDark } = useTheme();
 

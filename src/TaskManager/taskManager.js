@@ -15,7 +15,7 @@ import {
 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './addtask.css'
+import styles from './taskmanager.css'
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useTaskDispatch, useTaskState } from "../context/taskContext";
@@ -23,7 +23,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useTheme } from "../context/themeContext";
 
-const AddTask = () => {
+const TaskManager = () => {
     const { isDark } = useTheme();
     const [payload, setPayload] = useState({ title: '', category: '', completed: false, date: null });
     const tasks = useTaskState()
@@ -149,8 +149,6 @@ const AddTask = () => {
     const closeFilterModule = () => {
         setShowFilterModule(false);
     };
-
-
 
     const filteredTasks = filter === 'All' ? tasks : tasks.filter((t) => t.category === filter);
 
@@ -404,4 +402,4 @@ const AddTask = () => {
     )
 }
 
-export default AddTask;
+export default TaskManager;

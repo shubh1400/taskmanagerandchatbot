@@ -12,7 +12,7 @@ import {
 } from 'react-native-safe-area-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import AddTask from './src/addTask/addTask';
+import TaskManager from './src/TaskManager/taskManager';
 import { TaskProvider } from './src/context/taskContext'
 import Agenda from './src/agenda/agenda'
 import LoginScreen from './src/logIn/logIn';
@@ -60,7 +60,7 @@ function RootTab({ setIsLoggedIn }: any) {
         },
       })}
     >
-      <Tab.Screen name='Task Manager' component={AddTask} options={{
+      <Tab.Screen name='Task Manager' component={TaskManager} options={{
         tabBarLabelStyle: { fontSize: 12, color: isDark ? '#fff' : '#000' },
       }} />
       <Tab.Screen name='Calendar' component={Agenda} options={{
